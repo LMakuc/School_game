@@ -1,0 +1,3 @@
+D:/SDL/Prvi/cmake-build-debug/CMakeFiles/Prvi.dir
+D:/SDL/Prvi/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/SDL/Prvi/cmake-build-debug/CMakeFiles/rebuild_cache.dir
