@@ -184,25 +184,33 @@ void Game::inputLeaderboard() {
 
     std::cout<<"Name: "<<newPlayer.playerName<<"   Score: "<<newPlayer.playerScore<<std::endl;
 
-    std::ifstream reading("Leaderboard.bin", std::ios::binary);
-    std::ofstream writing("tmp.bin", std::ios::binary);
+    std::ifstream ldb("Leaderboard.bin", std::ios::binary);
+    std::ofstream tmp("tmp.bin", std::ios::binary);
 
     bool input = false;
+    int inputted = 0;
 
-    if(reading.is_open()){
-        while(reading.read((char *)&read, sizeof(read))){
-            if((read.playerScore < newPlayer.playerScore) && !input){
-                input=true;
-                writing.write((char *)&read, sizeof(read));
-            }
-            if(input==false){
-                writing.write((char *)&newPlayer, sizeof(newPlayer));
+    if(ldb.is_open()){
+        for(int i=0; i<5; i++){
+            Leaderboard something;
+            if(ldb.read((char *)&something, sizeof(something))){
+                if(something.playerScore > newPlayer.playerScore && !input){
+                    input=true;
+                    tmp.write((char *)&newPlayer, sizeof(newPlayer));
+                    inputted++;
+                }
+                if(tmp.write((char *)&something, sizeof(something)))
+                    inputted++;
             }
         }
+        if(inputted<5 && !input){
+            tmp.write((char *)&newPlayer, sizeof(newPlayer));
+        }
+    }
+    else{
+        tmp.write((char *)&newPlayer, sizeof(newPlayer));
     }
 
-    reading.close();
-    writing.close();
 
     remove("Leaderboard.bin");
     rename("tmp.bin", "Leaderboard.bin");

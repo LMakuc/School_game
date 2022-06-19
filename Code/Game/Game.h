@@ -35,5 +35,5 @@ public:
         void inputLeaderboard();
         void outputLeaderboard();
 
-    char name[25];
+        char name[25];
 };
