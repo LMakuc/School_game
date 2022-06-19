@@ -184,8 +184,8 @@ void Game::inputLeaderboard() {
 
     std::cout<<"Name: "<<newPlayer.playerName<<"   Score: "<<newPlayer.playerScore<<std::endl;
 
-    std::ifstream reading("Leaderboard.bin");
-    std::ofstream writing("tmp.bin");
+    std::ifstream reading("Leaderboard.bin", std::ios::binary);
+    std::ofstream writing("tmp.bin", std::ios::binary);
 
     bool input = false;
 
@@ -220,4 +220,6 @@ void Game::outputLeaderboard(){
             }
         }
     }
+
+    data.close();
 }
