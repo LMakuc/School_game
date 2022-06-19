@@ -215,7 +215,9 @@ void Game::outputLeaderboard(){
 
     if(data.is_open()){
         for(int i=0; i<5; i++){
-            std::cout<<i+1<<". "<<tmp.playerName<<std::setw(10)<<tmp.playerScore<<std::endl;
+            while(data.read((char *)&tmp, sizeof(tmp))){
+                std::cout<<i+1<<". "<<tmp.playerName<<std::setw(10)<<tmp.playerScore<<std::endl;
+            }
         }
     }
 }
