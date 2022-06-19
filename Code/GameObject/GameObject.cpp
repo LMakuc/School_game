@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "../Game/Game.h"
 
+
 GameObject::GameObject(const char* textureSheet, int x, int y) {
 
 	objectTexture = TextureManager::LoadTexture(textureSheet);
@@ -37,7 +38,7 @@ void GameObject::updateGameObject() {
 }
 
 void GameObject::renderGameObject() {
-	SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
+	SDL_RenderCopy(Menu::renderer, objectTexture, &srcRect, &destRect);
 }
 
 void GameObject::movementOfPlayer() {

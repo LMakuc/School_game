@@ -3,19 +3,25 @@
 #include "SDL_image.h"
 #undef main
 #include <iostream>
+#include "../Menu/Menu.h";
 
 class Game {
 	private:
-        bool isRunning;
+
 		SDL_Window* window;
 
 
 	public:
+
+        bool running = false;
+
 		Game();
 		~Game();
 
-		void initializing(const char *title, int posX, int posY, int width, int height, bool fullscreen);
-		
+		void initialize(const char *title, int posX, int posY, int width, int height, bool fullscreen);
+
+        void initializeNewGame();
+        void startNewGame();
 		void handleEvents();
 		void update();
 		void render();
@@ -23,6 +29,6 @@ class Game {
 
         static SDL_Renderer *renderer;
         static SDL_Event event;
-		bool running();
-        bool endOfGame();
+		bool Running();
+        void stopGame();
 };

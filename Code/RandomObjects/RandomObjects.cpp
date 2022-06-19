@@ -30,7 +30,7 @@ void RandomObject::updateRandomObject() {
 void RandomObject::renderRandomObject() {
 
     if(show){
-        SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
+        SDL_RenderCopy(Menu::renderer, objectTexture, &srcRect, &destRect);
 
     }
 

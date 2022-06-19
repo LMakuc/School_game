@@ -28,7 +28,9 @@ add_executable(Prvi
         Code/Objects/Animal.h
         Code/Objects/Animal.cpp
         Code/Objects/Scientist.h
-        Code/Objects/Scientist.cpp)
+        Code/Objects/Scientist.cpp
+        Code/Menu/Menu.h
+        Code/Menu/Menu.cpp)
 
 target_link_libraries(Prvi SDL2main SDL2 SDL2_image)
 

@@ -105,6 +105,13 @@ build CMakeFiles/Prvi.dir/Code/Objects/Scientist.cpp.obj: CXX_COMPILER__Prvi_Deb
   OBJECT_DIR = CMakeFiles\Prvi.dir
   OBJECT_FILE_DIR = CMakeFiles\Prvi.dir\Code\Objects
 
+build CMakeFiles/Prvi.dir/Code/Menu/Menu.cpp.obj: CXX_COMPILER__Prvi_Debug D$:/SDL/Prvi/Code/Menu/Menu.cpp || cmake_object_order_depends_target_Prvi
+  DEP_FILE = CMakeFiles\Prvi.dir\Code\Menu\Menu.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  INCLUDES = -ID:/SDL/Knjižnice/SDL2/include -ID:/SDL/Knjižnice/SDL2_image-2.0.1/include
+  OBJECT_DIR = CMakeFiles\Prvi.dir
+  OBJECT_FILE_DIR = CMakeFiles\Prvi.dir\Code\Menu
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Prvi
@@ -113,7 +120,7 @@ build CMakeFiles/Prvi.dir/Code/Objects/Scientist.cpp.obj: CXX_COMPILER__Prvi_Deb
 #############################################
 # Link the executable Prvi.exe
 
-build Prvi.exe: CXX_EXECUTABLE_LINKER__Prvi_Debug CMakeFiles/Prvi.dir/main.cpp.obj CMakeFiles/Prvi.dir/Code/Game/Game.cpp.obj CMakeFiles/Prvi.dir/Code/GameObject/GameObject.cpp.obj CMakeFiles/Prvi.dir/Code/TextureManager/TextureManager.cpp.obj CMakeFiles/Prvi.dir/Code/Map/Map.cpp.obj CMakeFiles/Prvi.dir/Code/RandomObjects/RandomObjects.cpp.obj CMakeFiles/Prvi.dir/Code/Objects/Animal.cpp.obj CMakeFiles/Prvi.dir/Code/Objects/Scientist.cpp.obj
+build Prvi.exe: CXX_EXECUTABLE_LINKER__Prvi_Debug CMakeFiles/Prvi.dir/main.cpp.obj CMakeFiles/Prvi.dir/Code/Game/Game.cpp.obj CMakeFiles/Prvi.dir/Code/GameObject/GameObject.cpp.obj CMakeFiles/Prvi.dir/Code/TextureManager/TextureManager.cpp.obj CMakeFiles/Prvi.dir/Code/Map/Map.cpp.obj CMakeFiles/Prvi.dir/Code/RandomObjects/RandomObjects.cpp.obj CMakeFiles/Prvi.dir/Code/Objects/Animal.cpp.obj CMakeFiles/Prvi.dir/Code/Objects/Scientist.cpp.obj CMakeFiles/Prvi.dir/Code/Menu/Menu.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LD:/SDL/Knjižnice/SDL2/lib/x64   -LD:/SDL/Knjižnice/SDL2_image-2.0.1/lib/x64

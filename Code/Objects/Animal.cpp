@@ -1,5 +1,6 @@
 #include "Animal.h"
 
+
 Animal::Animal(const char *textureSheet) {
 
     objectTexture = TextureManager::LoadTexture(textureSheet);
@@ -34,7 +35,7 @@ void Animal::updateAnimal() {
 void Animal::renderAnimal() {
 
     if(show){
-        SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
+        SDL_RenderCopy(Menu::renderer, objectTexture, &srcRect, &destRect);
     }
 }
 

@@ -1,8 +1,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "Code/Game/Game.h"
-
-Game* game = nullptr;
+#include "Code/Menu/Menu.h"
 
 int main(int argc, const char* argv[]) {
 
@@ -13,21 +12,31 @@ int main(int argc, const char* argv[]) {
     int frameTime;
 
     bool fullscreen;
-    std::cout<<"Ce zelite celozaslonsko igro vpisite 1, drugace vpisite 0: ";
+    std::cout<<"If you want to play fullscreen input 1 or else input 0: ";
     std::cin>>fullscreen;
 
-    game = new Game();
-    if(fullscreen){
-        game->initializing("Wani", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, SDL_WINDOW_FULLSCREEN);
-    }
-    else{
-        game->initializing("Wani", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, fullscreen);
-    }
+    Menu *game=new Menu("Ne testiranju nad zivalmi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, fullscreen);
+    game->initialize();
 
-    while (game->running()) {
-
+    while (game->isRunning) {
+        game->update();
 
         frameStart = SDL_GetTicks();
+        frameTime = SDL_GetTicks() - frameStart;
+        if(frameDelay>frameTime){
+            SDL_Delay(frameDelay-frameTime);
+        }
+    }
+
+    game->clean();
+
+
+    return 0;
+}
+
+/*
+ znotraj while(game->isRunning){
+ frameStart = SDL_GetTicks();
         //std::cout<<frameTime<<std::endl;
 
         game->handleEvents();
@@ -41,11 +50,5 @@ int main(int argc, const char* argv[]) {
         }
 
         if(Game::event.type == SDL_KEYDOWN && Game::event.key.keysym.sym == SDLK_ESCAPE){
-            break;
-        }
-    }
-
-    game->clean();
-
-    return 0;
-}
+            game->stopGame();
+ */

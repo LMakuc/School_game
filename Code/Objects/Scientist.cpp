@@ -28,7 +28,7 @@ void Scientist::updateScientist() {
 
 void Scientist::renderScientist() {
     if(show && wasHit)
-        SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
+        SDL_RenderCopy(Menu::renderer, objectTexture, &srcRect, &destRect);
 }
 
 void Scientist::movementOfScientist() {

@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "../TextureManager/TextureManager.h"
 
+
 int level1[20][25];
 
 Map::Map(){
