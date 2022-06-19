@@ -5,23 +5,31 @@
 #include "../Objects/Animal.h"
 #include "../Objects/Scientist.h"
 
+#include <iomanip>
+
+struct Leaderboard{
+    char playerName[25];
+    int playerScore;
+};
+
 GameObject *player;
 
 Map *map;
 
 RandomObject *lab;
 
-int level = 1;
+//int level = 1;
 const int numOfAnimalsAndScientists = 2;                           //če želimo več živali in znanstvenikov spremenimo
 int scientistCount = numOfAnimalsAndScientists;
 int scientistTab[numOfAnimalsAndScientists] = {0};
+int score = 0;
 
 Animal *dog[2];
 Scientist *scientist[2];
 
 SDL_Renderer *Game::renderer=nullptr;
 
-SDL_Event Game::event;
+SDL_Event Menu::event;
 
 
 
@@ -35,8 +43,12 @@ Game::~Game() {
 
 void Game::startNewGame(){
     scientistCount=2;
-    scientistTab[numOfAnimalsAndScientists]={0};
+    for(int i=0; i<numOfAnimalsAndScientists; i++){
+        scientistTab[i]=0;
+    }
     std::cout<<scientistCount<<std::endl;
+    labFound = false;
+    score = 0;
 }
 
 void Game::initializeNewGame() {
@@ -58,48 +70,6 @@ void Game::initializeNewGame() {
 
 }
 
-/*void Game::initialize(const char* title, int posX, int posY, int width, int height, bool fullscreen) {
-
-	int flags = 0;
-	if (fullscreen) {
-		flags = SDL_WINDOW_FULLSCREEN;
-	}
-
-	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-
-		std::cout << "Subsystem created.\n";
-
-		window = SDL_CreateWindow(title, posX, posY, width, height, flags);
-		if (window) {
-			std::cout << "Window created.\n";
-		}
-
-		renderer = SDL_CreateRenderer(window, -1, 0);
-		if (renderer) {
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-			std::cout << "Renderer created.\n";
-		}
-
-		running = true;
-	}
-	else {
-		running = false;
-	}
-
-    //player = new GameObject("Assets/Player.png", 100, 100);
-	player = new GameObject("Assets/Objects/littlePlayer.png", 400, 320);
-    //enemy = new GameObject("Assets/Enemy.png", 0, 0); za novega igralca
-    map=new Map();
-
-    lab = new RandomObject("Assets/Objects/Laboratory.png");
-
-    for(int i=0; i<numOfAnimalsAndScientists; i++){
-        dog[i] = new Animal("Assets/Objects/Dog.png");
-        scientist[i] = new Scientist("Assets/Objects/Scientist.png");
-    }
-
-}*/
-
 void Game::handleEvents() {
 	//SDL_Event event;
 	SDL_PollEvent(&event);
@@ -115,6 +85,9 @@ void Game::handleEvents() {
 
 void Game::update() {
 
+    int playerX=player->returnX();
+    int playerY=player->returnY();
+
 
 	player->updateGameObject();
     lab->updateRandomObject();
@@ -122,6 +95,7 @@ void Game::update() {
     if(lab->hasHitLaboratory(&player->destRect) && (event.key.keysym.sym == SDLK_KP_ENTER)) {
 
         std::cout << "Laboratory was found.\n";
+        labFound = true;
         for (int i = 0; i < numOfAnimalsAndScientists; i++) {
             dog[i]->found();
             scientist[i]->found();
@@ -129,9 +103,22 @@ void Game::update() {
         lab->hide();
     }
 
+    if(labFound){
+        for(int i=0; i<numOfAnimalsAndScientists; i++){
+            for(int j=0; j<numOfAnimalsAndScientists; j++){
+                if(SDL_HasIntersection(&scientist[i]->destRect, &dog[j]->destRect)){
+                    if(!scientistTab[i]){
+                        score++;
+                        std::cout<<"Scientist "<<i+1<<" has hit dog "<<j+1<<std::endl;
+                        std::cout<<"Score: "<<score<<std::endl;
+                    }
+                }
+            }
+        }
+    }
+
     for(int i=0; i<numOfAnimalsAndScientists; i++){
-        if(scientist[i]->hasHitScientist(&player->destRect)){
-            //std::cout<<"Scientist " <<i<<" was hit.\n";
+        if(scientist[i]->hasHitScientist(&player->destRect) && labFound){
             scientist[i]->wasHitByPlayer();
             for(int j=0; j<numOfAnimalsAndScientists; j++){
                 if(scientistTab[i]==0){
@@ -146,13 +133,14 @@ void Game::update() {
     }
 
     if(scientistCount == 0){
+        inputLeaderboard();
         std::cout<<"End of the game!\n";
         Game::running=false;
     }
 
     for(int i=0; i<numOfAnimalsAndScientists; i++){
         dog[i]->updateAnimal();
-        scientist[i]->updateScientist();
+        scientist[i]->updateScientist(playerX, playerY, labFound);
     }
 
 }
@@ -186,4 +174,48 @@ bool Game::Running() {
 
 void Game::stopGame(){
     running=!running;
+}
+
+void Game::inputLeaderboard() {
+    Leaderboard newPlayer, read;
+
+    strcpy(newPlayer.playerName, name);
+    newPlayer.playerScore=score;
+
+    std::cout<<"Name: "<<newPlayer.playerName<<"   Score: "<<newPlayer.playerScore<<std::endl;
+
+    std::ifstream reading("Leaderboard.bin");
+    std::ofstream writing("tmp.bin");
+
+    bool input = false;
+
+    if(reading.is_open()){
+        while(reading.read((char *)&read, sizeof(read))){
+            if((read.playerScore < newPlayer.playerScore) && !input){
+                input=true;
+                writing.write((char *)&read, sizeof(read));
+            }
+            if(input==false){
+                writing.write((char *)&newPlayer, sizeof(newPlayer));
+            }
+        }
+    }
+
+    reading.close();
+    writing.close();
+
+    remove("Leaderboard.bin");
+    rename("tmp.bin", "Leaderboard.bin");
+}
+
+void Game::outputLeaderboard(){
+    Leaderboard tmp;
+
+    std::ifstream data("Leaderboard.bin", std::ios::binary);
+
+    if(data.is_open()){
+        for(int i=0; i<5; i++){
+            std::cout<<i+1<<". "<<tmp.playerName<<std::setw(10)<<tmp.playerScore<<std::endl;
+        }
+    }
 }

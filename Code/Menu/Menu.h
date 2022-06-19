@@ -5,10 +5,9 @@
 class Menu{
     private:
         SDL_Window *window;
-        char name[25];
         SDL_Texture *selector;
         SDL_Texture *background;
-        bool active;
+        bool flags;
         int selection;
 
         SDL_Rect src, dest;
@@ -21,7 +20,6 @@ class Menu{
         SDL_Rect quit = {356, 459, 800, 26};
         SDL_Rect render = {0, 0, 800, 640};
         SDL_Rect selectorRect  =  {0, 0, 50, 50};
-        SDL_Rect mouseCursor;
 
     public:
         bool isRunning;

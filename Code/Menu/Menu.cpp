@@ -1,17 +1,14 @@
 #include "Menu.h"
 #include "../Game/Game.h"
-#include "../TextureManager//TextureManager.h";
+#include "../TextureManager//TextureManager.h"
 #include <fstream>
 
 SDL_Renderer *Menu::renderer;
-SDL_Event Menu::event;
+SDL_Event Game::event;
 
 Game *game;
 
 Menu::Menu(const char *title, int x, int y, int width, int height, bool fullscreen) {
-    std::cout<<"Input your name: ";
-    fgets(name, 25, stdin);
-    std::cin.ignore();
 
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0){
         std::cout<<"Failed to initialize: "<<SDL_GetError()<<std::endl;
@@ -106,6 +103,9 @@ void Menu::select() {
         case 0:
             std::cout<<"Start"<<std::endl;
             game=new Game();
+            fflush(stdin);
+            std::cout<<"Input your name: ";
+            fgets(game->name, 25, stdin);
             game->stopGame();
             game->startNewGame();
             game->initializeNewGame();
@@ -127,6 +127,7 @@ void Menu::select() {
             break;
         case 2:
             std::cout<<"Leaderboard"<<std::endl;
+            game->outputLeaderboard();
             break;
         case 3:
             std::cout<<"Quit"<<std::endl;

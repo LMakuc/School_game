@@ -3,17 +3,17 @@
 #include "SDL_image.h"
 #undef main
 #include <iostream>
-#include "../Menu/Menu.h";
+#include <fstream>
+#include "../Menu/Menu.h"
 
 class Game {
 	private:
-
 		SDL_Window* window;
 
-
-	public:
+public:
 
         bool running = false;
+        bool labFound=false;
 
 		Game();
 		~Game();
@@ -31,4 +31,9 @@ class Game {
         static SDL_Event event;
 		bool Running();
         void stopGame();
+
+        void inputLeaderboard();
+        void outputLeaderboard();
+
+    char name[25];
 };

@@ -1,4 +1,5 @@
 #include "Scientist.h"
+#include "../GameObject/GameObject.h"
 
 Scientist::Scientist(const char *textureSheet) {
     objectTexture = TextureManager::LoadTexture(textureSheet);
@@ -11,8 +12,7 @@ Scientist::~Scientist() {
 
 }
 
-void Scientist::updateScientist() {
-
+void Scientist::updateScientist(int x, int y, bool labFound){
     srcRect.h = 32;                                                         //če hočemo spreminjati velikost igralca spremenimo številko
     srcRect.w = 32;                                                         //pri srcRect.h in srcRect.w
     srcRect.x = 0;
@@ -23,7 +23,7 @@ void Scientist::updateScientist() {
     destRect.w = srcRect.w * 2;
     destRect.h = srcRect.h * 2;
 
-    movementOfScientist();
+    movementOfScientist(x, y, labFound);
 }
 
 void Scientist::renderScientist() {
@@ -31,44 +31,28 @@ void Scientist::renderScientist() {
         SDL_RenderCopy(Menu::renderer, objectTexture, &srcRect, &destRect);
 }
 
-void Scientist::movementOfScientist() {
-
-    int randNum;
-
-    randNum = rand()%20;
-
-    switch(randNum){
-        case 1:
-            if((ypos+10)>575)
-                break;
-            else
-                ypos+=10;
-            break;
-        case 2:
-            if((ypos-10)<35)
-                break;
-            else
-                ypos-=10;
-            break;
-        case 3:
-            if((xpos+10)>585)
-                break;
-            else
-                xpos+=10;
-            break;
-        case 4:
-            if((xpos-10)<20)
-                break;
-            else
-                xpos-=10;
-            break;
-        default:
-            break;
+void Scientist::movementOfScientist(int x, int y, bool labFound) {
+    if(labFound){
+        int randNum;
+        randNum=rand()%50;
+        if(randNum==5){
+            if(x>xpos && (xpos+10)<585){
+                xpos++;
+            }
+            if(x<xpos && (xpos-10)>20){
+                xpos--;
+            }
+            if(y>ypos && (ypos+10)<575){
+                ypos++;
+            }
+            if(y<ypos && (ypos-10)>35){
+                ypos--;
+            }
+        }
     }
 }
 
 void Scientist::found() {
-
     show = true;
 }
 
@@ -86,12 +70,4 @@ void Scientist::wasHitByPlayer() {
     wasHit = false;
 
     //std::cout<<"wasHit = "<<wasHit<<std::endl;
-}
-
-bool Scientist::mouseClickOnScientist() {
-
-    int mouseX, mouseY;
-
-
-
 }

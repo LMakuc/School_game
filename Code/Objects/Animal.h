@@ -2,7 +2,7 @@
 #include "SDL.h"
 #include "../Game/Game.h"
 #include "../TextureManager/TextureManager.h"
-#include "../Menu/Menu.h";
+#include "../Menu/Menu.h"
 
 class Animal{
     private:
@@ -11,9 +11,12 @@ class Animal{
         int xpos, ypos;
 
         SDL_Texture *objectTexture;
-        SDL_Rect srcRect, destRect;
+
 
     public:
+
+        SDL_Rect srcRect, destRect;
+
         Animal(const char *textureSheet);
         ~Animal();
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "SDL.h"
-#include "../Menu/Menu.h";
+#include "../Menu/Menu.h"
 
 class GameObject {
     private:
@@ -18,7 +18,8 @@ class GameObject {
 
         void movementOfPlayer();
 
-
+        int returnX(){return xpos;}
+        int returnY(){return ypos;}
 
         SDL_Rect srcRect;
         SDL_Rect destRect;

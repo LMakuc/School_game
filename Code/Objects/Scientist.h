@@ -2,7 +2,7 @@
 #include "SDL.h"
 #include "../Game/Game.h"
 #include "../TextureManager/TextureManager.h"
-#include "../Menu/Menu.h";
+#include "../Menu/Menu.h"
 
 class Scientist{
     private:
@@ -10,21 +10,23 @@ class Scientist{
         bool show = false, wasHit = true;
 
         SDL_Texture *objectTexture;
-        SDL_Rect srcRect, destRect;
+
+        SDL_Rect scientis = {0, 0, 32, 32};
 
     public:
+        SDL_Rect srcRect, destRect;
+
         Scientist(const char *textureSheet);
         ~Scientist();
 
-        void updateScientist();
+        void updateScientist(int x, int y, bool labFound);
         void renderScientist();
 
-        void movementOfScientist();
+        void movementOfScientist(int x, int y, bool labFound);
 
         void found();
         bool hasHitScientist(const SDL_Rect *player);
         void wasHitByPlayer();
-        bool mouseClickOnScientist();
 
         int xpos, ypos;
 };
