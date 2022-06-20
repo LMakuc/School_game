@@ -80,11 +80,10 @@ void Animal::found() {
     show = true;
 }
 
-/*bool Animal::hitScientist(const SDL_Rect *player) {
+int Animal::returnX(){
+    return xpos;
+}
 
-    if(SDL_HasIntersection(player, &destRect)){
-        return true;
-    }
-    else
-        return false;
-}*/
+int Animal::returnY(){
+    return ypos;
+}

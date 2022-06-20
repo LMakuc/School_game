@@ -25,6 +25,8 @@ class Animal{
 
         void movementOfAnimal();
 
+        int returnX();
+        int returnY();
 
         void found();
         //bool hitScientist(const SDL_Rect *player);

@@ -98,6 +98,7 @@ void Menu::clean() {
 void Menu::select() {
     const int FPS=120;
     const int frameDelay=1000/FPS;
+    int x, y;
 
     switch(selection){
         case 0:
@@ -116,14 +117,17 @@ void Menu::select() {
             }
             break;
         case 1:
-            std::cout<<"Load"<<std::endl;
+
+            std::cout<<"Replay"<<std::endl;
             game=new Game();
-            game->initializeNewGame();
-            while(game->Running()){
-                game->handleEvents();
-                game->update();
-                game->render();
+            game->initializeReplay();
+            data.open("Replay.txt");
+            while(data>>x>>y){
+                game->updateReplay(x, y);
+                game->renderReplay();
             }
+
+            data.close();
             break;
         case 2:
             std::cout<<"Leaderboard"<<std::endl;
@@ -133,6 +137,5 @@ void Menu::select() {
             std::cout<<"Quit"<<std::endl;
             break;
     }
-
 }
 

@@ -18,6 +18,8 @@ class GameObject {
 
         void movementOfPlayer();
 
+        void updateReplay(int x, int y);
+
         int returnX(){return xpos;}
         int returnY(){return ypos;}
 

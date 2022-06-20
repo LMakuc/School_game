@@ -6,6 +6,7 @@
 #include "../Objects/Scientist.h"
 
 #include <iomanip>
+#include <sstream>
 
 struct Leaderboard{
     char playerName[25];
@@ -70,6 +71,29 @@ void Game::initializeNewGame() {
 
 }
 
+void Game::initializeReplay() {
+    std::cout<<"Initialize replay.\n";
+
+    map=new Map();
+
+    player = new GameObject("Assets/Objects/littlePlayer.png", 400, 320);
+}
+
+void Game::updateReplay(int x, int y){
+
+    std::cout<<"x: "<<x<<"    y: "<<y<<std::endl;
+    player->updateReplay(x, y);
+
+
+}
+
+void Game::renderReplay(){
+    SDL_RenderClear(Menu::renderer);
+    map->drawMap();
+    player->renderGameObject();
+    SDL_RenderPresent(Menu::renderer);
+}
+
 void Game::handleEvents() {
 	//SDL_Event event;
 	SDL_PollEvent(&event);
@@ -81,13 +105,28 @@ void Game::handleEvents() {
 		default:
 			break;
 	}
+
+    if(Game::event.type == SDL_KEYDOWN && Game::event.key.keysym.sym == SDLK_ESCAPE){
+        stopGame();
+    }
 }
 
 void Game::update() {
 
+    int animalX[numOfAnimalsAndScientists];
+    int animalY[numOfAnimalsAndScientists];
+    for(int i=0; i<numOfAnimalsAndScientists; i++){
+        animalX[i]=dog[i]->returnX();
+        animalY[i]=dog[i]->returnY();
+    }
+
     int playerX=player->returnX();
     int playerY=player->returnY();
 
+    std::ofstream data("Replay.txt", std::ios::app);
+    data<<playerX<<std::endl;
+    data<<playerY<<std::endl;
+    data.close();
 
 	player->updateGameObject();
     lab->updateRandomObject();
@@ -140,7 +179,7 @@ void Game::update() {
 
     for(int i=0; i<numOfAnimalsAndScientists; i++){
         dog[i]->updateAnimal();
-        scientist[i]->updateScientist(playerX, playerY, labFound);
+        scientist[i]->updateScientist(animalX[i], animalY[i], labFound);
     }
 
 }
@@ -177,7 +216,7 @@ void Game::stopGame(){
 }
 
 void Game::inputLeaderboard() {
-    Leaderboard newPlayer, read;
+    Leaderboard newPlayer;
 
     strcpy(newPlayer.playerName, name);
     newPlayer.playerScore=score;
@@ -210,6 +249,10 @@ void Game::inputLeaderboard() {
     else{
         tmp.write((char *)&newPlayer, sizeof(newPlayer));
     }
+
+    ldb.close();
+    tmp.close();
+
 
 
     remove("Leaderboard.bin");

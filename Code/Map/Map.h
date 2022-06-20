@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Game/Game.h"
-#include "../Menu/Menu.h";
+#include "../Menu/Menu.h"
 
 class Map{
     private:

@@ -24,10 +24,10 @@ void GameObject::updateGameObject() {
 
 
 
-	srcRect.h = 16;                                                         //če hočemo spreminjati velikost igralca spremenimo številko
-    srcRect.w = 16;                                                         //pri srcRect.h in srcRect.w
     srcRect.x = 0;
     srcRect.y = 0;
+    srcRect.h = 16;                                                         //če hočemo spreminjati velikost igralca spremenimo številko
+    srcRect.w = 16;                                                         //pri srcRect.h in srcRect.w
 
     destRect.x = xpos;
     destRect.y = ypos;
@@ -35,6 +35,27 @@ void GameObject::updateGameObject() {
     destRect.h = srcRect.h * 2;
 
     movementOfPlayer();
+}
+
+void GameObject::updateReplay(int x, int y) {
+
+    xpos=x;
+    ypos=y;
+    //std::cout<<"xpos: "<<x<<"   ypos: "<<y<<std::endl;
+
+    srcRect.x = 0;
+    srcRect.y = 0;
+    srcRect.h = 16;                                                         //če hočemo spreminjati velikost igralca spremenimo številko
+    srcRect.w = 16;                                                         //pri srcRect.h in srcRect.w
+
+    destRect.x = x;
+    destRect.y = y;
+    destRect.w = srcRect.w * 2;
+    destRect.h = srcRect.h * 2;
+
+    //std::cout<<"Changing players position.\n";
+
+    //replayMovement(x, y);
 }
 
 void GameObject::renderGameObject() {

@@ -2,7 +2,7 @@
 #include "SDL.h"
 #include "../Game/Game.h"
 #include "../TextureManager/TextureManager.h"
-#include "../Menu/Menu.h";
+#include "../Menu/Menu.h"
 
 class RandomObject{
     private:

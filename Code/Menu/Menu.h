@@ -10,6 +10,8 @@ class Menu{
         bool flags;
         int selection;
 
+        std::ifstream data;
+
         SDL_Rect src, dest;
 
         int Mx, My;

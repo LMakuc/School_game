@@ -18,10 +18,15 @@ public:
 		Game();
 		~Game();
 
-		void initialize(const char *title, int posX, int posY, int width, int height, bool fullscreen);
+		//void initialize(const char *title, int posX, int posY, int width, int height, bool fullscreen);
 
         void initializeNewGame();
         void startNewGame();
+
+        void initializeReplay();
+        void updateReplay(int x, int y);
+        void renderReplay();
+
 		void handleEvents();
 		void update();
 		void render();
